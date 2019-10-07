@@ -16,7 +16,7 @@ module.exports = {
     },
     api: {
         prefix: '/api',
-        key: process.env.API_KEY
+        key: process.env.ADMIN_KEY
     },
     /**
      * Agenda.js stuff
@@ -29,9 +29,9 @@ module.exports = {
 
     /**
      * Agendash config
-
+    */
     agendash: {
-        user: 'agendash',
-        password: '123456'
-    },*/
+        user: process.env.AGENDASH_USER,
+        password: process.env.AGENDASH_PWORD
+    }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import Nav from '../components/nav'
+import fetch from 'isomorphic-unfetch';
 
 const Home = () => (
   <div>
@@ -34,5 +35,13 @@ const Home = () => (
     `}</style>
   </div>
 )
+// Home.getInitialProps = async () => {
+//   const res = await fetch('http://localhost:3000/api/blogs');
+//   const data = await res.json();
+
+//   console.log(data);
+
+//   return { "nada": "oioi" }
+// }
 
 export default Home

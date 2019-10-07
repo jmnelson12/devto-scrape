@@ -3,19 +3,18 @@ const next = require('next');
 const config = require('./src/config');
 const Logger = require('./src/loaders/logger');
 
-async function startServer() {
+function startServer() {
     const dev = process.env.NODE_ENV !== 'production';
     const app = next({ dev });
-    const server = express();
     const handle = app.getRequestHandler();
 
-    await require('./src/loaders')({ expressApp: server });
+    app.prepare().then(async () => {
+        const server = express();
 
-    app.prepare().then(() => {
-        const server = express()
+        await require('./src/loaders')({ expressApp: server });
 
         // for next.js
-        server.get('*', (req, res) => {
+        server.all('*', (req, res) => {
             return handle(req, res)
         });
 
