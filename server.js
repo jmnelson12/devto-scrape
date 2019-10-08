@@ -11,7 +11,7 @@ function startServer() {
     app.prepare().then(async () => {
         const server = express();
 
-        await require('./src/loaders')({ expressApp: server });
+        await require('./src/loaders')();
 
         // for next.js
         server.all('*', (req, res) => {

@@ -35,13 +35,13 @@ const Home = () => (
     `}</style>
   </div>
 )
-// Home.getInitialProps = async () => {
-//   const res = await fetch('http://localhost:3000/api/blogs');
-//   const data = await res.json();
+Home.getInitialProps = async () => {
+  const res = await fetch('http://localhost:3000/api/blogs');
+  const data = await res.json();
 
-//   console.log(data);
+  console.log(data);
 
-//   return { "nada": "oioi" }
-// }
+  return { "nada": "oioi" }
+}
 
 export default Home
