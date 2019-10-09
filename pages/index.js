@@ -1,10 +1,11 @@
 import React from 'react'
 import Head from 'next/head'
 import Nav from '../components/nav'
+import Blog from '../components/blog'
 import fetch from 'isomorphic-unfetch';
 
-const Home = () => (
-  <div>
+const Blogs = ({ blogs }) => (
+  <div className="cont">
     <Head>
       <title>Dev.to - Scrape</title>
       <link rel='icon' href='/static/favicon.ico' importance='low' />
@@ -13,10 +14,23 @@ const Home = () => (
     <Nav />
 
     <div className='hero'>
-      <h1 className='title'>Under Construction!</h1>
+      <h1 className='title'>Blogs</h1>
+    </div>
+
+    <div className="list">
+      <ul>
+        {blogs.map(blog => (
+          <li key={blog.id}>
+            <Blog data={blog} />
+          </li>
+        ))}
+      </ul>
     </div>
 
     <style jsx>{`
+      .cont {
+        background-color: #F9F9FA;
+      }
       .hero {
         width: 100%;
         color: #333;
@@ -32,16 +46,31 @@ const Home = () => (
       .description {
         text-align: center;
       }
+      ul {
+        list-style: none;
+        max-width: 80%;
+        margin: 10px auto;
+        padding: 0px;
+      }
+      li {
+        border: 1px solid #ddd;
+        margin: 20px 0;
+        border-radius: 3px;
+        box-shadow: 1px 1px 0px #c2c2c2;
+        position: relative;
+        background-color: #fff;
+      }
     `}</style>
   </div>
-)
-// Home.getInitialProps = async () => {
-//   const res = await fetch('http://localhost:3000/api/blogs');
-//   const data = await res.json();
+);
 
-//   console.log({ data });
+Blogs.getInitialProps = async ({ req }) => {
+  const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+  const res = await fetch(`${baseUrl}/api/blogs`);
+  const blogs = await res.json();
 
-//   return { "nada": "oioi" }
-// }
+  return { blogs }
+};
 
-export default Home
+
+export default Blogs
