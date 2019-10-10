@@ -2,7 +2,8 @@ import React from 'react'
 import Head from 'next/head'
 import Nav from '../components/nav'
 import Blog from '../components/blog'
-import fetch from 'isomorphic-unfetch';
+import axios from "axios";
+//import fetch from 'isomorphic-unfetch';
 
 const Blogs = ({ blogs }) => (
   <div className="cont">
@@ -68,10 +69,10 @@ const Blogs = ({ blogs }) => (
 
 Blogs.getInitialProps = async ({ req }) => {
   const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-  const res = await fetch(`${baseUrl}/api/blogs`);
-  const blogs = await res.json();
-
-  console.log({ baseUrl, res, blogs });
+  // const res = await fetch(`${baseUrl}/api/blogs`);
+  // const blogs = await res.json();
+  const { data: blogs } = await axios.get(`${baseUrl}/api/blogs`);
+  console.log({ blogs });
 
   return { blogs }
 };
