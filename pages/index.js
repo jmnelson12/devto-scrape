@@ -20,11 +20,7 @@ const Blogs = ({ blogs }) => (
 
     <div className="list">
       <ul>
-        {blogs.map(blog => (
-          <li key={blog.id}>
-            <Blog data={blog} />
-          </li>
-        ))}
+
       </ul>
     </div>
 
@@ -66,16 +62,24 @@ const Blogs = ({ blogs }) => (
     `}</style>
   </div>
 );
+/**
+ * {blogs.map(blog => (
+          <li key={blog.id}>
+            <Blog data={blog} />
+          </li>
+        ))}
+ */
 
-Blogs.getInitialProps = async ({ req }) => {
-  const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-  // const res = await fetch(`${baseUrl}/api/blogs`);
-  // const blogs = await res.json();
-  const { data: blogs } = await axios.get(`${baseUrl}/api/blogs`);
-  console.log({ blogs });
 
-  return { blogs }
-};
+// Blogs.getInitialProps = async ({ req }) => {
+//   const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
+//   // const res = await fetch(`${baseUrl}/api/blogs`);
+//   // const blogs = await res.json();
+//   const { data: blogs } = await axios.get(`${baseUrl}/api/blogs`);
+//   console.log({ blogs });
+
+//   return { blogs }
+// };
 
 
 export default Blogs
