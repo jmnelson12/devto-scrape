@@ -54,11 +54,13 @@ const Blogs = ({ blogs }) => (
       }
       li {
         border: 1px solid #ddd;
-        margin: 20px 0;
+        margin: 35px auto;
         border-radius: 3px;
         box-shadow: 1px 1px 0px #c2c2c2;
         position: relative;
         background-color: #fff;
+        width: 45%;
+        min-width: 450px;
       }
     `}</style>
   </div>
