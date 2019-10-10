@@ -71,6 +71,8 @@ Blogs.getInitialProps = async ({ req }) => {
   const res = await fetch(`${baseUrl}/api/blogs`);
   const blogs = await res.json();
 
+  console.log({ baseUrl, res, blogs });
+
   return { blogs }
 };
 
