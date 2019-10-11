@@ -11,13 +11,10 @@ function startServer() {
     app.prepare().then(async () => {
         const server = express();
 
-        await require('./src/loaders')();
+        await require('./src/loaders')({ app: server });
 
         // for next.js
-        server.all('*', (req, res) => {
-            return handle(req, res)
-        });
-
+        server.all('*', (req, res) => handle(req, res));
         server.listen(config.port, err => {
             if (err) {
                 Logger.error(err);

@@ -10,19 +10,21 @@ if (!env) {
 
 module.exports = {
     port: parseInt(process.env.PORT, 10),
-    // databaseURL: process.env.MONGODB_URI,
+    databaseURL: process.env.MONGODB_URI,
     logs: {
         level: process.env.LOG_LEVEL || 'silly',
     },
+    api: {
+        prefix: '/api'
+    },
     /**
      * Agenda.js stuff
-
+     */
     agenda: {
         dbCollection: process.env.AGENDA_DB_COLLECTION,
         pooltime: process.env.AGENDA_POOL_TIME,
         concurrency: parseInt(process.env.AGENDA_CONCURRENCY, 10),
-    },*/
-
+    },
     /**
      * Agendash config
     */
