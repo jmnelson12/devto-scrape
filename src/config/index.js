@@ -14,9 +14,6 @@ module.exports = {
     logs: {
         level: process.env.LOG_LEVEL || 'silly',
     },
-    api: {
-        prefix: '/api'
-    },
     /**
      * Agenda.js stuff
      */
