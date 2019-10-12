@@ -11,14 +11,6 @@ function startServer() {
     app.prepare().then(async () => {
         const server = express();
 
-        server.use('/test1', (req, res) => {
-            return res.json("test1").status(200);
-        });
-
-        server.get('/test2', (req, res) => {
-            return res.json("test2").status(200);
-        });
-
         await require('./src/loaders')({ app: server });
 
         // for next.js
