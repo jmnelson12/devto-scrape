@@ -2,10 +2,11 @@ const puppeteer = require('puppeteer');
 const Logger = require('../loaders/logger');
 const BASE_DEV_TO_URL = 'https://dev.to';
 const BASE_WEEK_URL = `${BASE_DEV_TO_URL}/top/week`;
-const grabLimit = 20;
 
 module.exports = class DevToScrape {
-    constructor() { }
+    constructor(grabLimit = 20) {
+        this.grabLimit = grabLimit;
+    }
 
     async scrapeTopWeeklyBlogs(link) {
         const href = link || BASE_WEEK_URL;
@@ -18,40 +19,39 @@ module.exports = class DevToScrape {
 
             const data = await page.evaluate(({ BASE_DEV_TO_URL, grabLimit }) => {
                 let blogArray = [];
-                // TODO: Get Main Story - need to subtract substring grab limit to accomidate the additional main story
+                let i = 0;
 
                 // get substories
-                const baseSubstoryArticleQuery = '#substories .single-article';
-                const titleNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} h3`);
-                const authorAndDateNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} h4 a`);
-                const linkNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} > a.index-article-link`);
-                const likesNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} span.engagement-count-number`);
-                const tagsNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} div.tags`);
-                const imageNodeList = document.querySelectorAll(`${baseSubstoryArticleQuery} div.small-pic img`);
-
-                for (let i = 1; i <= grabLimit; i++) {
-                    let authorAndDate = authorAndDateNodeList[i].innerText.trim().split('・');
-                    let individualTagsList = [].map.call(tagsNodeList[i].querySelectorAll('.tag'), tag => {
+                const articlesNodeList = document.querySelectorAll('#substories > .single-article:not(.feed-cta)');
+                for (i; i < articlesNodeList.length; i++) {
+                    let articleNode = articlesNodeList[i];
+                    let title = articleNode.querySelector('h3').innerText.trim();
+                    let authorAndDate = articleNode.querySelector('h4 a').innerText.trim().split('・');
+                    let link = articleNode.querySelector('a.index-article-link').getAttribute('href');
+                    let tagsNodeList = [].map.call(articleNode.querySelectorAll('span.tag'), tag => {
                         return tag.innerText.trim();
                     });
+                    let likes = Number(articleNode.querySelector('span.engagement-count-number').innerText.trim());
+                    let profile_image = articleNode.querySelector('div.small-pic img').getAttribute('src');
 
                     blogArray[i] = {
-                        id: i,
-                        title: titleNodeList[i].innerText.trim() || "title not found",
-                        author: authorAndDate[0].trim() || "author not found",
-                        date: authorAndDate[1].trim() || "date not found",
-                        link: BASE_DEV_TO_URL + linkNodeList[i].getAttribute('href') || "link not found",
-                        likes: likesNodeList[i].innerText.trim() || 0,
-                        tags: individualTagsList,
-                        profile_image: BASE_DEV_TO_URL + imageNodeList[i].getAttribute('src') || ""
-                    };
+                        id: (i + 1),
+                        title,
+                        author: authorAndDate[0].trim(),
+                        date: authorAndDate[1].trim(),
+                        link: BASE_DEV_TO_URL + link,
+                        likes,
+                        tags: tagsNodeList,
+                        profile_image
+                    }
+
+                    if (i === (grabLimit - 1)) break;
                 }
 
                 return blogArray;
-            }, { BASE_DEV_TO_URL, grabLimit });
+            }, { BASE_DEV_TO_URL, grabLimit: this.grabLimit });
 
             await browser.close();
-
             return data;
         } catch (err) {
             Logger.error('(~/services/scrapeDevTo.js) - Error');

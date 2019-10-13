@@ -7,7 +7,7 @@ const Blog = ({ data }) => (
         </div>
         <div className="content">
             <div className="title">
-                {/* Not using link component because we are linking to external page */}
+                {/* Not using Link component because we are linking to external page */}
                 <a href={data.link} target="_blank" rel="noopener">
                     <h3>{data.title}</h3>
                 </a>
@@ -16,11 +16,14 @@ const Blog = ({ data }) => (
                 <h4>{data.author} - {data.date}</h4>
             </div>
             <div className="tags">
-                {data.tags.map(tag => (
-                    <a href={`https://dev.to/t/${tag}`} key={tag} target="_blank">
-                        #{tag}
-                    </a>
-                ))}
+                {data.tags.map(tag => {
+                    let tagWithoutHash = tag.split('#')[1];
+                    return (
+                        <a href={`https://dev.to/t/${tagWithoutHash}`} key={tagWithoutHash} target="_blank">
+                            {tag}
+                        </a>
+                    )
+                })}
             </div>
             <div className="likes">
                 <p>{data.likes} likes</p>

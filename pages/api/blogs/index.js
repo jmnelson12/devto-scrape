@@ -1,5 +1,5 @@
 // Fake users data
-const blogs = [
+const testBlogData = [
     {
         id: 1,
         title: "Call for DEV Contributors",
@@ -38,11 +38,13 @@ const blogModel = Container.get('blogModel');
 
 export default (req, res) => {
     // Get data from your database
-    blogModel.find({}, (err, _blogs) => {
+    const query = blogModel.find({}).select('-_id').sort({ likes: -1 }); // get all but the _id and sort
+
+    query.exec((err, blogs) => {
         if (err) {
             res.status(500).json('Error getting blogs from database');
         }
-        console.log(_blogs);
+
         res.status(200).json(blogs)
-    })
+    });
 }
