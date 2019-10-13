@@ -32,7 +32,17 @@ const blogs = [
     }
 ];
 
+import { Container } from 'typedi';
+
+const blogModel = Container.get('blogModel');
+
 export default (req, res) => {
     // Get data from your database
-    res.status(200).json(blogs)
+    blogModel.find({}, (err, _blogs) => {
+        if (err) {
+            res.status(500).json('Error getting blogs from database');
+        }
+        console.log(_blogs);
+        res.status(200).json(blogs)
+    })
 }
