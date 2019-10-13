@@ -1,7 +1,6 @@
 const cors = require('cors');
 const helmet = require('helmet');
 const routes = require('../api');
-const config = require('../config');
 
 module.exports = (app) => {
     // Shows the real origin IP in the heroku or Cloudwatch logs
@@ -12,6 +11,5 @@ module.exports = (app) => {
     app.use(helmet());
 
     // load api routes
-    // app.routes(config.api.prefix, routes(app));
     routes(app);
 }

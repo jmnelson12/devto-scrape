@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "helmet": "^3.21.1",
+    "heroku-ssl-redirect": "0.0.4",
     "isomorphic-unfetch": "^3.0.0",
     "mongoose": "^5.7.4",
     "next": "9.0.8",
