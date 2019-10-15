@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const Logger = require('../loaders/logger');
 const BASE_DEV_TO_URL = 'https://dev.to';
 const BASE_WEEK_URL = `${BASE_DEV_TO_URL}/top/week`;
 
@@ -10,7 +9,7 @@ module.exports = class DevToScrape {
 
     async scrapeTopWeeklyBlogs(link) {
         const href = link || BASE_WEEK_URL;
-        Logger.info("!!! Scraping Dev.to Top Weekly Blogs !!!");
+        console.log("!!! Scraping Dev.to Top Weekly Blogs !!!");
 
         try {
             const browser = await puppeteer.launch(/*{headless: false}*/);
@@ -55,8 +54,8 @@ module.exports = class DevToScrape {
             await browser.close();
             return data;
         } catch (err) {
-            Logger.error('(~/services/scrapeDevTo.js) - Error');
-            Logger.error(err);
+            console.log('(~/services/scrapeDevTo.js) - Error');
+            console.log(err);
 
             return null;
         }

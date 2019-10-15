@@ -1,5 +1,4 @@
 const { Container } = require('typedi');
-const Logger = require('./logger');
 const agenda = require('./agenda');
 
 module.exports = ({ mongoConnection, models }) => {
@@ -11,13 +10,12 @@ module.exports = ({ mongoConnection, models }) => {
         const agendaInstance = agenda({ mongoConnection });
 
         Container.set('agendaInstance', agendaInstance);
-        Container.set('logger', Logger);
 
-        Logger.info('Agenda injected into container');
+        console.log('Agenda injected into container');
 
         return { agenda: agendaInstance };
     } catch (e) {
-        Logger.error(' Error on dependency injector loader: %o', e);
+        console.log(' Error on dependency injector loader: %o', e);
         throw e;
     }
 }

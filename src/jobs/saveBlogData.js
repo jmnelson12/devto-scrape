@@ -1,5 +1,4 @@
 const ScrapeDevToService = require('../services/scrapeDevTo');
-const Logger = require('../loaders/logger');
 const { Container } = require('typedi');
 
 module.exports = class SaveBlogData {

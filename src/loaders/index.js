@@ -2,7 +2,6 @@ const mongooseLoader = require('./mongoose');
 const expressLoader = require('./express');
 const jobsLoader = require('../jobs');
 const dependencyInjectorLoader = require('./dependencyInjector');
-const Logger = require('./logger');
 
 module.exports = async ({ app }) => {
     const mongoConnection = await mongooseLoader();
