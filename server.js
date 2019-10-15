@@ -11,12 +11,12 @@ function startServer() {
 
     app.prepare().then(async () => {
         const server = express();
-
+        console.log("#################### TEST PRODUCTION LOG ####################")
         await require('./src/loaders')({ app: server });
 
-        if (!dev) { // for heroku -> default to https
-            server.use(sslRedirect());
-        }
+        // if (!dev) { // for heroku -> default to https
+        //     server.use(sslRedirect());
+        // }
 
         // for next.js
         server.all('*', (req, res) => handle(req, res));
