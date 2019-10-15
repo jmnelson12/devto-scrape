@@ -29,7 +29,7 @@ module.exports = async ({ app }) => {
 
     // start scrape service
     //agenda.schedule('2 seconds', 'devto-scrape-weekly-blogs', { link: null }); // for testing
-    agenda.every('30 minutes', 'devto-scrape-weekly-blogs', { link: null });
+    agenda.every('15 minutes', 'devto-scrape-weekly-blogs', { link: null });
 
     // this is how we could use it in other files
     // const { Container } = require('typedi');
