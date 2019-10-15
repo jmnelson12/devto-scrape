@@ -11,7 +11,7 @@ function startServer() {
 
     app.prepare().then(async () => {
         const server = express();
-        console.log("#################### TEST PRODUCTION LOG ####################")
+
         await require('./src/loaders')({ app: server });
 
         // if (!dev) { // for heroku -> default to https

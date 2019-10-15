@@ -6,7 +6,7 @@ const Logger = require('./logger');
 
 module.exports = async ({ app }) => {
     const mongoConnection = await mongooseLoader();
-    Logger.info('DB loaded and connected... ');
+    console.log('DB loaded and connected... ');
 
     const blogModel = {
         name: 'blogModel',
@@ -19,13 +19,13 @@ module.exports = async ({ app }) => {
             blogModel
         ],
     });
-    Logger.info('Dependency Injector loaded... ');
+    console.log('Dependency Injector loaded... ');
 
     await jobsLoader({ agenda });
-    Logger.info('Jobs loaded... ');
+    console.log('Jobs loaded... ');
 
     await expressLoader(app);
-    Logger.info('Express routes loaded... ');
+    console.log('Express routes loaded... ');
 
     // start scrape service
     //agenda.every('30 seconds', 'devto-scrape-weekly-blogs', { link: null }); // for testing

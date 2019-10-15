@@ -18,7 +18,7 @@ module.exports = class SaveBlogData {
                         throw err;
                     }
                 }); // clear collection
-                Logger.info('Deleted blogs from db');
+                console.log('Deleted blogs from db');
 
                 // save new blogs
                 data.forEach(blog => {
@@ -27,7 +27,7 @@ module.exports = class SaveBlogData {
                             console.log("### Error Saving Blog ###", err);
                             throw err;
                         }
-                        Logger.info(`Blog ${_b.id} saved`);
+                        console.log(`Blog ${_b.id} saved`);
                     });
                 });
 
@@ -39,8 +39,8 @@ module.exports = class SaveBlogData {
                 throw "(/src/jobs/saveBlogData) - Data Scrape Error";
             }
         } catch (err) {
-            Logger.error("(/src/jobs/saveBlogData) - Error");
-            Logger.error(err);
+            console.log("(/src/jobs/saveBlogData) - Error");
+            console.log(err);
             done();
         }
     }
