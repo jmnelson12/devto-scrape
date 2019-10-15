@@ -12,7 +12,13 @@ module.exports = class DevToScrape {
         console.log("!!! Scraping Dev.to Top Weekly Blogs !!!");
 
         try {
-            const browser = await puppeteer.launch(/*{headless: false}*/);
+            // const browser = await puppeteer.launch(/*{headless: false}*/);
+            const browser = await puppeteer.launch({
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                ],
+            });
             const page = await browser.newPage();
             await page.goto(href);
             await page.waitForSelector('#articles-list');
