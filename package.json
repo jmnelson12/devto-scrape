@@ -2,6 +2,10 @@
   "name": "devto-scrape",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.x"
+  },
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
