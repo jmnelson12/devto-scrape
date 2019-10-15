@@ -14,28 +14,33 @@ module.exports = class SaveBlogData {
             if (data && data.length != 0) {
                 await blogModel.deleteMany({}, (err) => {
                     if (err) {
-                        console.error("Error Deleting All Blogs", err);
+                        console.log("### Error Deleting All Blogs ###", err);
+                        throw err;
                     }
                 }); // clear collection
+                Logger.info('Deleted blogs from db');
 
                 // save new blogs
                 data.forEach(blog => {
-                    let b = new blogModel(blog);
-                    b.save((err, _b) => {
+                    new blogModel(blog).save((err, _b) => {
                         if (err) {
-                            console.error("\nError Saving Blog", err);
+                            console.log("### Error Saving Blog ###", err);
+                            throw err;
                         }
+                        Logger.info(`Blog ${_b.id} saved`);
                     });
                 });
 
-                Logger.info("Successfully saved new blogs list !!");
+                setTimeout(function () {
+                    // adding timemout so we can see when running in /admin dash
+                    done();
+                }, 5000);
             } else {
                 throw "(/src/jobs/saveBlogData) - Data Scrape Error";
             }
         } catch (err) {
             Logger.error("(/src/jobs/saveBlogData) - Error");
             Logger.error(err);
-        } finally {
             done();
         }
     }

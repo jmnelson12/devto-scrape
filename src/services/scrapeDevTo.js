@@ -10,6 +10,7 @@ module.exports = class DevToScrape {
 
     async scrapeTopWeeklyBlogs(link) {
         const href = link || BASE_WEEK_URL;
+        Logger.info("!!! Scraping Dev.to Top Weekly Blogs !!!");
 
         try {
             const browser = await puppeteer.launch(/*{headless: false}*/);
